@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom"
 import CreatableReactSelect from "react-select/creatable"
 import { v4 as uuidV4 } from "uuid"
 
-export function NoteForm({ onSubmit, onAddTag, availableTags }) {
+export function NoteForm({ onSubmit, onAddTag, availableTags, title = "", markdown = "", tags = [] }) {
     const titleRef = useRef(null)
     const markdownRef = useRef(null)
-    const [selectedTags, setSelectedTags] = useState([])
+    const [selectedTags, setSelectedTags] = useState(tags)
     const navigate = useNavigate()
 
     function handleSubmit(e) {
@@ -29,7 +29,7 @@ export function NoteForm({ onSubmit, onAddTag, availableTags }) {
                     <Col>
                         <Form.Group controlId="title">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control ref={titleRef} required />
+                            <Form.Control ref={titleRef} required defaultValue={title} />
                         </Form.Group>
                     </Col>
                     <Col>
@@ -69,6 +69,7 @@ export function NoteForm({ onSubmit, onAddTag, availableTags }) {
                         as="textarea"
                         ref={markdownRef}
                         rows={15}
+                        defaultValue={markdown}
                     />
                 </Form.Group>
                 <Stack
