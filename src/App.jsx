@@ -1,14 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Container } from "react-bootstrap"
 import { Navigate, Route, Routes } from "react-router-dom"
-import { useLocalStorage } from "./useLocalStorage"
+import { useLocalStorage } from "./hooks/useLocalStorage"
 import { useMemo } from "react"
 import { v4 as uuidV4 } from "uuid"
-import { NewNote } from "./NewNote"
-import { NoteList } from "./NoteList"
-import { NoteLayout } from "./NoteLayout"
-import { Note } from "./Note"
-import { EditNote } from "./EditNote"
+import { NewNote } from "./pages/NewNote"
+import { NoteList } from "./pages/NoteList"
+import { NoteLayout } from "./layout/NoteLayout"
+import { Note } from "./pages/Note"
+import { EditNote } from "./pages/EditNote"
 
 function App() {
     const [notes, setNotes] = useLocalStorage("NOTES", [])
@@ -77,7 +77,7 @@ function App() {
     }
 
     return (
-        <Container className="my-4">
+        <Container className="my-4" style={{ maxWidth: "80%", margin: "auto" }}>
             <Routes>
                 <Route
                     path="/"
