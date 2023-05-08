@@ -33,7 +33,7 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }) {
 
     return (
         <>
-            <Row className="align-items-center mb-4">
+            <Row className="align-items-center mb-4 ">
                 <Col>
                     <h1> 🐾 Meotes</h1>
                 </Col>
@@ -55,7 +55,7 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }) {
                 <Row className="mb-4">
                     <Col>
                         <Form.Group controlId="title">
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label>Search using Title</Form.Label>
                             <Form.Control
                                 type="text"
                                 value={title}
@@ -65,7 +65,7 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }) {
                     </Col>
                     <Col>
                         <Form.Group controlId="tags">
-                            <Form.Label>Tags</Form.Label>
+                            <Form.Label>Search using Tags</Form.Label>
                             <ReactSelect
                                 value={selectedTags.map((tag) => {
                                     return { label: tag.label, value: tag.id }
@@ -89,17 +89,23 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }) {
                     </Col>
                 </Row>
             </Form>
-            <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
-                {filteredNotes.map((note) => (
-                    <Col key={note.id}>
-                        <NoteCard
-                            id={note.id}
-                            title={note.title}
-                            tags={note.tags}
-                        />
-                    </Col>
-                ))}
-            </Row>
+            {filteredNotes.length > 0 ? (
+                <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
+                    {filteredNotes.map((note) => (
+                        <Col key={note.id}>
+                            <NoteCard
+                                id={note.id}
+                                title={note.title}
+                                tags={note.tags}
+                            />
+                        </Col>
+                    ))}
+                </Row>
+            ) : (
+                <h1
+                    style={{ color: "darksalmon",marginTop: "5rem" }}
+                >{`Note with the title "${title}" does not exist...`}</h1>
+            )}
             <EditTagsModal
                 onUpdateTag={onUpdateTag}
                 onDeleteTag={onDeleteTag}

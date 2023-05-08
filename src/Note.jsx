@@ -8,6 +8,13 @@ export function Note({ onDelete }) {
     const note = useNote()
     const navigate = useNavigate()
 
+    const handleDelete = () => {
+        if(window.confirm(`Are you sure you want to delete ${note.title} ?`)){
+            onDelete(note.id)
+            navigate("/")
+        }
+    }
+
     return (
         <>
             <Row className="align-items-center mb-4">
@@ -27,16 +34,13 @@ export function Note({ onDelete }) {
                         </Stack>
                     )}
                 </Col>
-                <Col xs="auto">
+                <Col md="auto my-4">
                     <Stack gap={2} direction="horizontal">
                         <Link to={`/${note.id}/edit`}>
-                            <Button variant="primary">Edit</Button>
+                            <Button variant="primary">Update</Button>
                         </Link>
                         <Button
-                            onClick={() => {
-                                onDelete(note.id)
-                                navigate("/")
-                            }}
+                            onClick={handleDelete}
                             variant="outline-danger"
                         >
                             Delete

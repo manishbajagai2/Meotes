@@ -36,6 +36,7 @@ export function NoteForm({ onSubmit, onAddTag, availableTags, title = "", markdo
                         <Form.Group controlId="tags">
                             <Form.Label>Tags</Form.Label>
                             <CreatableReactSelect
+                                placeholder={"Type to create or select"}
                                 onCreateOption={(label) => {
                                     const newTag = { id: uuidV4(), label }
                                     onAddTag(newTag)
