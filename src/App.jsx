@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Container } from "react-bootstrap"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 import { useMemo } from "react"
@@ -77,7 +76,7 @@ function App() {
     }
 
     return (
-        <Container className="my-4" style={{ maxWidth: "80%", margin: "auto" }}>
+        <>
             <Routes>
                 <Route
                     path="/"
@@ -118,7 +117,7 @@ function App() {
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
-        </Container>
+        </>
     )
 }
 

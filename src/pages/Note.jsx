@@ -2,7 +2,7 @@ import { Badge, Col, Row, Stack } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useNote } from "../layout/NoteLayout"
 import ReactMarkdown from "react-markdown"
-import { NavBar } from "../component/NavBar"
+import NavBar from "../component/NavBar"
 
 export function Note({ onDelete }) {
     const note = useNote()
@@ -20,29 +20,35 @@ export function Note({ onDelete }) {
             <NavBar
                 linkText={`/${note.id}/edit`}
                 text1={"Update"}
+                variantText1="primary"
                 fn={handleDelete}
                 text2={"Delete"}
-                secondButtonVariant={"outline-danger"}
+                variantText2={"outline-danger"}
             />
-            <Row className="mb-4">
-                <Col>
-                    <h1>{note.title}</h1>
-                    {note.tags.length > 0 && (
-                        <Stack
-                            gap={1}
-                            direction="horizontal"
-                            className="flex-wrap"
-                        >
-                            {note.tags.map((tag) => (
-                                <Badge className="text-truncate" key={tag.id}>
-                                    {tag.label}
-                                </Badge>
-                            ))}
-                        </Stack>
-                    )}
-                </Col>
-            </Row>
-            <ReactMarkdown>{note.markdown}</ReactMarkdown>
+            <div style={{ maxWidth: "80%", margin: "2rem auto" }}>
+                <Row className="mb-4">
+                    <Col>
+                        <h1>{note.title}</h1>
+                        {note.tags.length > 0 && (
+                            <Stack
+                                gap={1}
+                                direction="horizontal"
+                                className="flex-wrap"
+                            >
+                                {note.tags.map((tag) => (
+                                    <Badge
+                                        className="text-truncate"
+                                        key={tag.id}
+                                    >
+                                        {tag.label}
+                                    </Badge>
+                                ))}
+                            </Stack>
+                        )}
+                    </Col>
+                </Row>
+                <ReactMarkdown>{note.markdown}</ReactMarkdown>
+            </div>
         </>
     )
 }
