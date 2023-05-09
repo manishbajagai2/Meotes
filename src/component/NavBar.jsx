@@ -1,11 +1,25 @@
+import { onAuthStateChanged } from "firebase/auth"
+import { useEffect, useState } from "react"
 import { Button, Stack } from "react-bootstrap"
 import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import NavDropdown from "react-bootstrap/NavDropdown"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { firebaseAuth } from "../utils/firebase-config"
+import { signOut } from "firebase/auth"
 
-function NavBar({ linkText, text1, variantText1, fn, text2, variantText2 }) {
+function NavBar(props) {
+    const navigate = useNavigate()
+
+    const [user, setUser] = useState(undefined)
+
+    useEffect(() => {
+        onAuthStateChanged(firebaseAuth, (currentUser) => {
+            if (currentUser) setUser(currentUser)
+        })
+    }, [navigate])
+
     return (
         <Navbar
             collapseOnSelect
@@ -27,37 +41,56 @@ function NavBar({ linkText, text1, variantText1, fn, text2, variantText2 }) {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto"></Nav>
-                    <Nav>
-                        <div
-                            style={{
-                                display: "flex",
-                                gap: "5px",
-                                marginRight: "2rem",
-                            }}
-                        >
-                            <Navbar.Text fixed className="my-2 ">
-                                Signed in as:
-                            </Navbar.Text>
-                            <NavDropdown
-                                style={{ fontSize: "1.05rem" }}
-                                title="Manish"
-                                id="collasible-nav-dropdown"
+                    {Object.keys(props).length > 2 ? (
+                        <Nav>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    gap: "5px",
+                                    marginRight: "2rem",
+                                }}
+                            >
+                                <Navbar.Text fixed="true" className="my-2 ">
+                                    Signed in as:
+                                </Navbar.Text>
+                                <NavDropdown
+                                    style={{ fontSize: "1.05rem" }}
+                                    title={user?.displayName || "guest"}
+                                    id="collasible-nav-dropdown"
+                                    className="my-2"
+                                >
+                                    <NavDropdown.Item
+                                        onClick={() => signOut(firebaseAuth)}
+                                    >
+                                        Sign Out
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </div>
+                            <Stack
+                                gap={2}
+                                direction="horizontal"
                                 className="my-2"
                             >
-                                <NavDropdown.Item href="/">
-                                    Sign Out
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                        </div>
-                        <Stack gap={2} direction="horizontal" className="my-2">
-                            <Link to={linkText}>
-                                <Button variant={variantText1}>{text1}</Button>
+                                <Link to={props.linkText}>
+                                    <Button variant={props.variantText1}>
+                                        {props.text1}
+                                    </Button>
+                                </Link>
+                                <Button
+                                    onClick={props.fn}
+                                    variant={props.variantText2}
+                                >
+                                    {props.text2}
+                                </Button>
+                            </Stack>
+                        </Nav>
+                    ) : (
+                        <Nav>
+                            <Link to={props.linkText}>
+                                <Button variant="primary">{props.text1}</Button>
                             </Link>
-                            <Button onClick={fn} variant={variantText2}>
-                                {text2}
-                            </Button>
-                        </Stack>
-                    </Nav>
+                        </Nav>
+                    )}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

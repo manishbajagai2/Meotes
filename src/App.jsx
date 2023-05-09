@@ -8,6 +8,8 @@ import { NoteList } from "./pages/NoteList"
 import { NoteLayout } from "./layout/NoteLayout"
 import { Note } from "./pages/Note"
 import { EditNote } from "./pages/EditNote"
+import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 
 function App() {
     const [notes, setNotes] = useLocalStorage("NOTES", [])
@@ -78,7 +80,10 @@ function App() {
     return (
         <>
             <Routes>
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/signup" element={<Signup />} />
                 <Route
+                    exact
                     path="/"
                     element={
                         <NoteList
@@ -90,6 +95,7 @@ function App() {
                     }
                 />
                 <Route
+                    exact
                     path="/new"
                     element={
                         <NewNote
@@ -100,6 +106,7 @@ function App() {
                     }
                 />
                 <Route
+                    exact
                     path="/:id"
                     element={<NoteLayout notes={notesWithTags} />}
                 >

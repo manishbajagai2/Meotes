@@ -3,10 +3,20 @@ import { useNavigate } from "react-router-dom"
 import { useNote } from "../layout/NoteLayout"
 import ReactMarkdown from "react-markdown"
 import NavBar from "../component/NavBar"
+import { useEffect } from "react"
+import { onAuthStateChanged } from "firebase/auth"
+import { firebaseAuth } from "../utils/firebase-config"
 
 export function Note({ onDelete }) {
-    const note = useNote()
+
     const navigate = useNavigate()
+    useEffect(() => {
+        onAuthStateChanged(firebaseAuth, (currentUser) => {
+            if (!currentUser) navigate("/login")
+        })
+    }, [navigate])
+
+    const note = useNote()
 
     const handleDelete = () => {
         if (window.confirm(`Are you sure you want to delete ${note.title} ?`)) {

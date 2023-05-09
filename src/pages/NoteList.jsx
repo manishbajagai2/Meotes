@@ -1,11 +1,21 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Col, Form, Row } from "react-bootstrap"
 import ReactSelect from "react-select"
 import NoteCard from "../component/NoteCard/NoteCard"
 import EditTagsModal from "../component/EditTagsModal"
 import NavBar from "../component/NavBar"
+import { useNavigate } from "react-router-dom"
+import { onAuthStateChanged } from "firebase/auth"
+import { firebaseAuth } from "../utils/firebase-config"
 
 export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }) {
+    const navigate = useNavigate()
+    useEffect(() => {
+        onAuthStateChanged(firebaseAuth, (currentUser) => {
+            if (!currentUser) navigate("/login")
+        })
+    }, [navigate])
+
     const [selectedTags, setSelectedTags] = useState([])
     const [title, setTitle] = useState("")
     const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false)
