@@ -38,10 +38,8 @@ function NavBar(props) {
                         <h1> 🐾 Meotes</h1>
                     </Link>
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto"></Nav>
-                    {Object.keys(props).length > 2 ? (
+                {Object.keys(props).length > 2 ? (
+                    <>
                         <Nav>
                             <div
                                 style={{
@@ -66,32 +64,28 @@ function NavBar(props) {
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             </div>
-                            <Stack
-                                gap={2}
-                                direction="horizontal"
-                                className="my-2"
-                            >
-                                <Link to={props.linkText}>
-                                    <Button variant={props.variantText1}>
-                                        {props.text1}
-                                    </Button>
-                                </Link>
-                                <Button
-                                    onClick={props.fn}
-                                    variant={props.variantText2}
-                                >
-                                    {props.text2}
-                                </Button>
-                            </Stack>
                         </Nav>
-                    ) : (
-                        <Nav>
+                        <Stack gap={2} direction="horizontal" className="my-2">
                             <Link to={props.linkText}>
-                                <Button variant="primary">{props.text1}</Button>
+                                <Button variant={props.variantText1}>
+                                    {props.text1}
+                                </Button>
                             </Link>
-                        </Nav>
-                    )}
-                </Navbar.Collapse>
+                            <Button
+                                onClick={props.fn}
+                                variant={props.variantText2}
+                            >
+                                {props.text2}
+                            </Button>
+                        </Stack>
+                    </>
+                ) : (
+                    <Nav>
+                        <Link to={props.linkText}>
+                            <Button variant="primary">{props.text1}</Button>
+                        </Link>
+                    </Nav>
+                )}
             </Container>
         </Navbar>
     )

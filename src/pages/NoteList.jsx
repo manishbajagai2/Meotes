@@ -106,8 +106,17 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }) {
                     </Row>
                 ) : (
                     <h1
-                        style={{ color: "darksalmon", marginTop: "5rem" }}
-                    >{`Note with the title "${title}" does not exist...`}</h1>
+                        style={{
+                            color: "darksalmon",
+                            display: "flex",
+                            flexDirection: "column",
+                            height: "50vh",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                            lineHeight: "3.5rem",
+                        }}
+                    >{`No notes available at the moment. Please create a new one or update the search query i,e (${title})`}</h1>
                 )}
                 <EditTagsModal
                     onUpdateTag={onUpdateTag}
