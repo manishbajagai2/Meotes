@@ -21,7 +21,6 @@ function App() {
     useEffect(() => {
         onAuthStateChanged(firebaseAuth, (currentUser) => {
             if (currentUser) setUser(currentUser)
-            else navigate("/login")
         })
     }, [navigate])
 
@@ -45,6 +44,7 @@ function App() {
         })
     }, [notes, tags])
 
+
     async function onCreateNote({ tags, ...data }) {
         let randId = uuidV4()
         await setDoc(doc(db, "customers", user?.uid, "allNotes", randId), {
@@ -66,10 +66,10 @@ function App() {
     }
 
     async function addTag(tag) {
-        let randId = uuidV4()
-        await setDoc(doc(db, "customers", user?.uid, "allTags", randId), {
+        // let randId = uuidV4()
+        await setDoc(doc(db, "customers", user?.uid, "allTags", tag.id), {
             ...tag,
-            id: randId,
+            id: tag.id,
         })
     }
 

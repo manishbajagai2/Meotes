@@ -67,13 +67,15 @@ function Signup() {
                 <NavBar linkText="/login" text1="Sign In" />
                 <div className="body">
                     <div className="text">
-                        <h1>Create notes with markdown, find them all.</h1>
-                        <h4>
+                        <h1>
+                            Create unlimited notes with markdown, find them all.
+                        </h1>
+                        <h4 className="d-none d-md-block">
                             Elevate your productivity with our easy-to-use
                             note-taking app
                         </h4>
                         <h6>
-                            Ready to capture and organize your thoughts? Create
+                            Ready to capture and organize your resource ? Create
                             your personal account today_
                         </h6>
                     </div>
@@ -157,7 +159,7 @@ const Container = styled.div`
                 color: #ffffff;
                 h1 {
                     font-size: 2rem;
-                    padding: 1rem 0.25rem;
+                    padding: 0.5rem 0.25rem;
                     font-weight: 800;
                 }
                 h4 {
